@@ -14,3 +14,31 @@ const pagination = document.querySelector('[data-js="pagination"]');
 const maxPage = 1;
 const page = 1;
 const searchQuery = "";
+
+async function fetchCharacters() {
+  try {
+    const response = await fetch("https://rickandmortyapi.com/api/character");
+
+    if (response.ok) {
+      const data = await response.json();
+
+      const results = data.results;
+
+      results.forEach((result) => {
+        const options = {
+          image: result.image,
+          name: result.name,
+          status: result.status,
+          type: result.type,
+          occurrences: result.episode.length,
+        };
+
+        cardContainer.innerHTML += createCharacterCard(options);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+fetchCharacters();

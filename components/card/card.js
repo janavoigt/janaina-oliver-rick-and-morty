@@ -1,4 +1,10 @@
-export function createCharacterCard({ image, name, status, type, occurrences }) {
+export function createCharacterCard({
+  image,
+  name,
+  status,
+  type,
+  occurrences,
+}) {
   const card = `        
   <li class="card">
   <div class="card__image-container">

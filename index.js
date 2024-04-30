@@ -24,14 +24,10 @@ async function fetchCharacters(searchQueryObject) {
     let url = "https://rickandmortyapi.com/api/character";
 
     if (searchQueryString) {
-      cardContainer.innerHTML = "";
       url += `?name=${encodeURIComponent(searchQueryString)}`;
-    }
-
-    if (!searchQueryString && page > 1) {
+      if (page > 1) url += `&page=${page}`;
+    } else if (page > 1) {
       url += `?page=${page}`;
-    } else if (searchQueryString && page > 1) {
-      url += `&page=${page}`;
     }
 
     const response = await fetch(url);
@@ -41,7 +37,7 @@ async function fetchCharacters(searchQueryObject) {
       const results = data.results;
       let maxPage = data.info.pages; // Get the maxPage value from the response
 
-      cardContainer.innerHTML = "";
+      let content = "";
 
       results.forEach((result) => {
         const options = {
@@ -51,14 +47,10 @@ async function fetchCharacters(searchQueryObject) {
           type: result.type,
           occurrences: result.episode.length,
         };
-
-        cardContainer.innerHTML += createCharacterCard(options);
+        content += createCharacterCard(options);
       });
 
-      // Update maxPage if a search query is provided
-      if (searchQueryString) {
-        maxPage = maxPage;
-      }
+      cardContainer.innerHTML = content; // Update the DOM only once
 
       // Return both the results and the maxPage value
       return { results, maxPage };

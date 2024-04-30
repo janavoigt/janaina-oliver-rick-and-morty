@@ -1,5 +1,7 @@
+// Import the createCharacterCard function from the card module
 import { createCharacterCard } from "./components/card/card.js";
 
+// Select DOM elements
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
@@ -11,50 +13,104 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-let maxPage = 42;
+let maxPage = 1;
 let page = 1;
-const searchQuery = "";
+let searchQuery = "";
 
-async function fetchCharacters() {
+async function fetchCharacters(searchQueryObject) {
+  const searchQueryString = searchQueryObject?.query;
+
   try {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character?page=${page}`
-    );
+    let url = "https://rickandmortyapi.com/api/character";
+
+    if (searchQueryString) {
+      cardContainer.innerHTML = "";
+      url += `?name=${encodeURIComponent(searchQueryString)}`;
+    }
+
+    if (!searchQueryString && page > 1) {
+      url += `?page=${page}`;
+    } else if (searchQueryString && page > 1) {
+      url += `&page=${page}`;
+    }
+
+    const response = await fetch(url);
 
     if (response.ok) {
       const data = await response.json();
       const results = data.results;
-
-      // cardContainer.innerHTML = results
-      //   .map((character) => createCharacterCard(character))
-      //   .join();
+      let maxPage = data.info.pages; // Get the maxPage value from the response
 
       cardContainer.innerHTML = "";
-      results.forEach((character) => {
-        const htmlCard = createCharacterCard(character);
-        cardContainer.innerHTML += htmlCard;
+
+      results.forEach((result) => {
+        const options = {
+          image: result.image,
+          name: result.name,
+          status: result.status,
+          type: result.type,
+          occurrences: result.episode.length,
+        };
+
+        cardContainer.innerHTML += createCharacterCard(options);
       });
+
+      // Update maxPage if a search query is provided
+      if (searchQueryString) {
+        maxPage = maxPage;
+      }
+
+      // Return both the results and the maxPage value
+      return { results, maxPage };
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-prevButton.addEventListener("click", () => {
+// Update the maxPage variable after fetchCharacters() resolves
+async function updateMaxPage() {
+  const { maxPage } = await fetchCharacters();
+  return maxPage;
+}
+
+// Update maxPage on initial pageload
+updateMaxPage().then((page) => {
+  maxPage = page;
+  page = 1;
+  pagination.textContent = `${page} / ${maxPage}`;
+});
+
+searchBar.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  searchQuery = Object.fromEntries(formData);
+  page = 1; // Reset page to 1 on new search
+  const { maxPage: updatedMaxPage } = await fetchCharacters(searchQuery);
+  maxPage = updatedMaxPage;
+  pagination.textContent = `${page} / ${maxPage}`;
+});
+
+prevButton.addEventListener("click", async () => {
   if (page > 1) {
     page--;
+    const { maxPage: updatedMaxPage } = await fetchCharacters({
+      query: searchQuery.query,
+      page,
+    });
+    maxPage = updatedMaxPage; // Update the global maxPage with the new value
     pagination.textContent = `${page} / ${maxPage}`;
-    fetchCharacters();
   }
 });
 
-nextButton.addEventListener("click", () => {
+nextButton.addEventListener("click", async () => {
   if (page < maxPage) {
     page++;
+    const { maxPage: updatedMaxPage } = await fetchCharacters({
+      query: searchQuery.query,
+      page,
+    });
+    maxPage = updatedMaxPage; // Update the global maxPage with the new value
     pagination.textContent = `${page} / ${maxPage}`;
-    fetchCharacters();
   }
 });
-
-fetchCharacters();
-pagination.textContent = `${page} / ${maxPage}`;

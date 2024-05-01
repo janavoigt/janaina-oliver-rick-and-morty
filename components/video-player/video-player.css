@@ -1,0 +1,14 @@
+#video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -100;
+}
+
+#video-background video {
+  width: 100%;
+  min-height: 100vh;
+  opacity: 0.5;
+  object-fit: cover;
+}

@@ -4,9 +4,13 @@
   grid-template-columns: 100px 100px 100px;
   justify-content: center;
   margin-block: calc(var(--m-block-base) / 2);
+  column-gap: calc(var(--m-block-base) / 2);
 }
 
 .navigation__pagination {
   display: grid;
   place-items: center;
+  font-weight: 600;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--color-secondary), 0 0 70px var(--color-secondary), 0 0 80px var(--color-secondary), 0 0 100px var(--color-secondary), 0 0 150px var(--color-secondary);
+  scale: 1.2;
 }

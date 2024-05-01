@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: calc(var(--m-block-base) / 2);
-  margin-bottom: 10px;
+  margin-block-end: calc(var(--m-block-base) / 3);
   max-width: 1200px;
 }
 

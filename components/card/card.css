@@ -4,7 +4,6 @@
   justify-content: center;
   gap: calc(var(--m-block-base) / 2);
   margin-bottom: 10px;
-  /* background-color: green; */
   max-width: 1200px;
 }
 
@@ -13,12 +12,19 @@
   border-radius: var(--border-radius-base);
   border: 3px solid black;
   background-color: var(--color-secondary);
+  transition: var(--transition-base);
+  
+  &:hover {
+    background-color: var(--color-accent);
+    box-shadow: var(--border-stroke);
+    color: var(--color-secondary);
+    scale: 1.05;
+  }
 }
 
 .card__image {
   border-top-left-radius: calc(var(--border-radius-base) - 3px);
   border-top-right-radius: calc(var(--border-radius-base) - 3px);
-  /* overflow: hidden; */
   width: 100%;
 }
 
@@ -39,4 +45,3 @@
 li {
   list-style: none;
 }
-

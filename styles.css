@@ -23,7 +23,7 @@
   --border-stroke: 0 0 2px 10px var(--color-accent);
   --border-radius-base: 1rem;
 
-  --transition-base: 200ms all ease-in-out;
+  --transition-base: 400ms all cubic-bezier(0.98, -0.71, 0.02, 1.63);
 }
 
 @font-face {
@@ -34,12 +34,21 @@
 h1 {
   font-size: var(--m-block-base);
   margin-block: var(--m-block-base);
+
+  text-shadow: 0 0 10px #bfbfbf, 0 0 20px #bfbfbf, 0 0 30px #bfbfbf,
+    0 0 40px var(--color-accent), 0 0 70px var(--color-accent),
+    0 0 80px var(--color-accent), 0 0 100px var(--color-accent),
+    0 0 150px var(--color-accent);
 }
 
 h1,
 h2 {
   text-align: center;
   font-family: var(--font-family-brand);
+}
+
+h2 {
+  text-shadow: 5px 5px 0px rgba(255, 127, 80, 0.75), 1px 1px 0px var(--color-primary);
 }
 
 button {

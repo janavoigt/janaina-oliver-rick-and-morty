@@ -11,13 +11,13 @@
   width: 300px;
   border-radius: var(--border-radius-base);
   border: 3px solid black;
-  background-color: var(--color-secondary);
+  background-color: var(--color-light);
   transition: var(--transition-base);
   
   &:hover {
-    background-color: var(--color-accent);
+    background-color: var(--color-primary);
     box-shadow: var(--border-stroke);
-    color: var(--color-secondary);
+    color: var(--color-light);
     scale: 1.05;
   }
 }

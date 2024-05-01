@@ -8,7 +8,7 @@
   border: none;
   border-radius: calc(var(--border-radius-base) / 2);
   padding: 10px 20px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-light);
   transition: var(--transition-base);
 
   &:focus-within {
@@ -20,7 +20,7 @@
 .search-bar__input {
   background-color: transparent;
   border: none;
-  color: var(--color-primary);
+  color: var(--color-dark);
 
   &:focus {
     outline: none;

@@ -17,92 +17,58 @@ let maxPage = 1;
 let page = 1;
 let searchQuery = "";
 
-async function fetchCharacters(searchQueryObject) {
-  const searchQueryString = searchQueryObject?.query;
-
+async function fetchCharacters() {
   try {
-    let url = "https://rickandmortyapi.com/api/character";
-
-    if (searchQueryString) {
-      url += `?name=${encodeURIComponent(searchQueryString)}`;
-      if (page > 1) url += `&page=${page}`;
-    } else if (page > 1) {
-      url += `?page=${page}`;
-    }
+    // We can always send the page parameter even if it is page 1 and also according to the instructions
+    // we can always send the searchQuery as well because the API will ignore if it is empty
+    let url = `https://rickandmortyapi.com/api/character?page=${page}&name=${encodeURIComponent(
+      searchQuery
+    )}`;
 
     const response = await fetch(url);
 
     if (response.ok) {
       const data = await response.json();
       const results = data.results;
-      let maxPage = data.info.pages; // Get the maxPage value from the response
 
-      let content = "";
+      maxPage = data.info.pages; // We can update the maxPage status directly
+      pagination.textContent = `${page} / ${maxPage}`; // Then we can update the pagination here
+
+      cardContainer.innerHTML = "";
 
       results.forEach((result) => {
-        const options = {
-          image: result.image,
-          name: result.name,
-          status: result.status,
-          type: result.type,
-          occurrences: result.episode.length,
-        };
-        content += createCharacterCard(options);
+        cardContainer.innerHTML += createCharacterCard(result);
       });
-
-      cardContainer.innerHTML = content; // Update the DOM only once
-
-      // Return both the results and the maxPage value
-      return { results, maxPage };
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-// Update the maxPage variable after fetchCharacters() resolves
-async function updateMaxPage() {
-  const { maxPage } = await fetchCharacters();
-  return maxPage;
-}
-
-// Update maxPage on initial pageload
-updateMaxPage().then((page) => {
-  maxPage = page;
-  page = 1;
-  pagination.textContent = `${page} / ${maxPage}`;
-});
-
 searchBar.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const formData = new FormData(e.target);
-  searchQuery = Object.fromEntries(formData);
+  const data = Object.fromEntries(formData);
+
   page = 1; // Reset page to 1 on new search
-  const { maxPage: updatedMaxPage } = await fetchCharacters(searchQuery);
-  maxPage = updatedMaxPage;
-  pagination.textContent = `${page} / ${maxPage}`;
+  searchQuery = data.query;
+
+  await fetchCharacters();
 });
 
 prevButton.addEventListener("click", async () => {
   if (page > 1) {
     page--;
-    const { maxPage: updatedMaxPage } = await fetchCharacters({
-      query: searchQuery.query,
-      page,
-    });
-    maxPage = updatedMaxPage; // Update the global maxPage with the new value
-    pagination.textContent = `${page} / ${maxPage}`;
+    await fetchCharacters();
   }
 });
 
 nextButton.addEventListener("click", async () => {
   if (page < maxPage) {
     page++;
-    const { maxPage: updatedMaxPage } = await fetchCharacters({
-      query: searchQuery.query,
-      page,
-    });
-    maxPage = updatedMaxPage; // Update the global maxPage with the new value
-    pagination.textContent = `${page} / ${maxPage}`;
+    await fetchCharacters();
   }
 });
+
+fetchCharacters();

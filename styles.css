@@ -13,12 +13,17 @@
 :root {
   --color-primary: rgb(51, 51, 51);
   --color-secondary: #f6f6f6;
+  --color-accent: #0097ae;
 
   --font-family: system-ui;
   --font-family-brand: "get_schwifty";
 
   --m-block-base: 5rem;
+
+  --border-stroke: 0 0 2px 10px var(--color-accent);
   --border-radius-base: 1rem;
+
+  --transition-base: 200ms all ease-in-out;
 }
 
 @font-face {

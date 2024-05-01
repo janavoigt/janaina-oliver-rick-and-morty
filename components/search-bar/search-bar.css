@@ -3,10 +3,11 @@
 }
 
 .search-bar {
-  padding: 10px 20px;
-  background-color: var(--color-secondary);
   display: grid;
   grid-template-columns: 1fr 24px;
+  border-radius: calc(var(--border-radius-base) / 2);
+  padding: 10px 20px;
+  background-color: var(--color-secondary);
 }
 
 .search-bar__input {

@@ -4,13 +4,22 @@
   justify-content: center;
   gap: calc(var(--m-block-base) / 2);
   margin-bottom: 10px;
-  background-color: green;
+  /* background-color: green; */
   max-width: 1200px;
 }
 
 .card {
   width: 300px;
+  border-radius: var(--border-radius-base);
+  border: 3px solid black;
   background-color: var(--color-secondary);
+}
+
+.card__image {
+  border-top-left-radius: calc(var(--border-radius-base) - 3px);
+  border-top-right-radius: calc(var(--border-radius-base) - 3px);
+  /* overflow: hidden; */
+  width: 100%;
 }
 
 .card__info {

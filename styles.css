@@ -12,23 +12,17 @@
 :root {
   --color-primary: rgb(51, 51, 51);
   --color-secondary: #f6f6f6;
-  
+
   --font-family: system-ui;
   --font-family-brand: "get_schwifty";
 
   --m-block-base: 5rem;
+  --border-radius-base: 1rem;
 }
 
 @font-face {
   font-family: "get_schwifty";
   src: url(./assets/get_schwifty.ttf);
-}
-
-body {
-  font-family: var(--font-family);
-  color: var(--color-primary);
-  padding: 20px;
-  background-color: coral;
 }
 
 h1 {
@@ -42,12 +36,23 @@ h2 {
   font-family: var(--font-family-brand);
 }
 
+button {
+  cursor: pointer;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-primary);
+  padding: 20px;
+  /* background-color: coral; */
+  
+}
+
 main {
   display: flex;
   flex-direction: column;
   gap: var(--m-block-base);
 }
-
 
 main > * {
   margin-inline: auto;

@@ -1,10 +1,10 @@
 .navigation {
-  height: 30px;
   display: grid;
   grid-template-columns: 100px 100px 100px;
   justify-content: center;
   margin-block: calc(var(--m-block-base) / 2);
   column-gap: calc(var(--m-block-base) / 2);
+  height: 30px;
 }
 
 .navigation__pagination {

@@ -38,6 +38,30 @@ async function fetchCharacters() {
       results.forEach((result) => {
         cardContainer.innerHTML += createCharacterCard(result);
       });
+    } else {
+      cardContainer.innerHTML = `<li class="card">
+      <div class="card__image-container">
+        <img
+          class="card__image"
+          src="./assets/rick-and-morty-icon.jpg"
+          alt=""
+        />
+        <div class="card__image-gradient"></div>
+      </div>
+      <div class="card__content">
+        <h2 class="card__title">TRY AGAIN</h2>
+        <dl class="card__info">
+          <dt class="card__info-title">Status</dt>
+          <dd class="card__info-description">Not Found</dd>
+          <dt class="card__info-title">Type</dt>
+          <dd class="card__info-description">Crazy</dd>
+          <dt class="card__info-title">Occurrences</dt>
+          <dd class="card__info-description">000</dd>
+        </dl>
+      </div>
+    </li>
+    `;
+      pagination.textContent = `${(page = 0)} / ${(maxPage = 0)}`;
     }
   } catch (error) {
     console.error(error);

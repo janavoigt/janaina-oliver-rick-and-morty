@@ -1,6 +1,7 @@
 // Import the createCharacterCard function from the card module
 import { createCharacterCard } from "./components/card/card.js";
 import { createButton } from "./components/nav-button/nav-button.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 
 // Select DOM elements
 const cardContainer = document.querySelector('[data-js="card-container"]');
@@ -24,14 +25,14 @@ const nextButton = createButton("next", async () => {
   }
 });
 
-navigation.append(prevButton, nextButton);
-
-const pagination = document.querySelector('[data-js="pagination"]');
-
 // States
 let maxPage = 1;
 let page = 1;
 let searchQuery = "";
+
+const pagination = createPagination(page, maxPage);
+
+navigation.append(prevButton, pagination, nextButton);
 
 async function fetchCharacters() {
   try {
@@ -72,19 +73,5 @@ searchBar.addEventListener("submit", async (e) => {
 
   await fetchCharacters();
 });
-
-// prevButton.addEventListener("click", async () => {
-//   if (page > 1) {
-//     page--;
-//     await fetchCharacters();
-//   }
-// });
-
-// nextButton.addEventListener("click", async () => {
-//   if (page < maxPage) {
-//     page++;
-//     await fetchCharacters();
-//   }
-// });
 
 fetchCharacters();

@@ -1,7 +1,8 @@
-@import "components/card/card.css";
-@import "components/search-bar/search-bar.css";
-@import "components/nav-button/nav-button.css";
-@import "components/nav-pagination/nav-pagination.css";
+@import "./components/card/card.css";
+@import "./components/search-bar/search-bar.css";
+@import "./components/nav-button/nav-button.css";
+@import "./components/nav-pagination/nav-pagination.css";
+@import "./components/video-player/video-player.css";
 
 * {
   box-sizing: border-box;
@@ -10,23 +11,64 @@
 }
 
 :root {
-  --color-primary: rgb(51, 51, 51);
-  --color-secondary: #f6f6f6;
+  --color-dark: rgb(51, 51, 51);
+  --color-light: #f6f6f6;
+  --color-primary: #0097ae;
+  --color-secondary: rgb(255, 127, 80);
+
   --font-family: system-ui;
+  --font-family-brand: "get_schwifty";
+
+  --m-block-base: 5rem;
+
+  --border-stroke: 0 0 2px 10px var(--color-primary);
+  --border-radius-base: 1rem;
+
+  --transition-base: 400ms all cubic-bezier(0.98, -0.71, 0.02, 1.63);
+}
+
+@font-face {
+  font-family: "get_schwifty";
+  src: url(./assets/get_schwifty.ttf);
+}
+
+h1 {
+  margin-block: var(--m-block-base);
+  font-size: var(--m-block-base);
+  text-shadow: 0 0 10px #bfbfbf, 0 0 20px #bfbfbf, 0 0 30px #bfbfbf,
+    0 0 40px var(--color-primary), 0 0 70px var(--color-primary),
+    0 0 80px var(--color-primary), 0 0 100px var(--color-primary),
+    0 0 150px var(--color-primary);
+}
+
+h1,
+h2 {
+  text-align: center;
+  font-family: var(--font-family-brand);
+}
+
+h2 {
+  text-shadow: 5px 5px 0px rgba(255, 127, 80, 0.75), 1px 1px 0px var(--color-dark);
+}
+
+button {
+  border-radius: calc(var(--border-radius-base) / 2);
+  cursor: pointer;
 }
 
 body {
-  font-family: var(--font-family);
-  color: var(--color-primary);
   padding: 20px;
+  background-color: var(--color-secondary);
+  color: var(--color-dark);
+  font-family: var(--font-family);
 }
 
 main {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--m-block-base);
 }
 
-.title {
-  padding: 10px 0;
+main > * {
+  margin-inline: auto;
 }

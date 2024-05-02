@@ -1,7 +1,13 @@
 .button {
   border: none;
-}
-
-.button:hover {
   background-color: var(--color-secondary);
+  transition: var(--transition-base);
+  scale: 1.2;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    font-weight: 600;
+    scale: 1.4;
+  }
 }

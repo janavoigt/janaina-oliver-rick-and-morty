@@ -10,13 +10,29 @@
     <link rel="stylesheet" href="./styles.css" />
     <link rel="shortcut icon" href="data:x-icon" type="image/x-icon" />
   </head>
-  <body>
+  <body id="body">
+    <!-- Experimental -->
+    <div class="img-wrap">
+      <div class="rosetta-outline"></div>
+      <a href="#body">
+        <img
+          class="scrolltrigger__rosetta"
+          src="assets/rick-and-morty-icon.jpg"
+          alt=""
+        />
+      </a>
+      <div class="clipmask">
+        <div class="arrow">TOP</div>
+      </div>
+    </div>
+    <!-- Experimental -->
+
     <section id="video-background">
       <video autoplay muted loop>
         <source src="./assets/rickandmorty-loop.mp4" type="video/mp4" />
       </video>
     </section>
-    <h1 class="title">Rick and Morty</h1>
+    <h1 id="title" class="title">Rick and Morty</h1>
     <main>
       <div class="search-bar-container" data-js="search-bar-container">
         <form action="" class="search-bar" data-js="search-bar">

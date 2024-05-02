@@ -3,6 +3,7 @@
 @import "./components/nav-button/nav-button.css";
 @import "./components/nav-pagination/nav-pagination.css";
 @import "./components/video-player/video-player.css";
+@import "./components/to-top-button/to-top-button.css";
 
 * {
   box-sizing: border-box;

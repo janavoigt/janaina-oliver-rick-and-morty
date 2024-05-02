@@ -1,16 +1,15 @@
 // Import the createCharacterCard function from the card module
 import { createCharacterCard } from "./components/card/card.js";
+import { createButton } from "./components/nav-button/nav-button.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { createSearchBar } from "./components/search-bar/search-bar.js";
 
 // Select DOM elements
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
-const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
 let maxPage = 1;
@@ -39,13 +38,53 @@ async function fetchCharacters() {
       results.forEach((result) => {
         cardContainer.innerHTML += createCharacterCard(result);
       });
+    } else {
+      cardContainer.innerHTML = `<li class="card">
+      <div class="card__image-container">
+        <img
+          class="card__image"
+          src="./assets/rick-and-morty-icon.jpg"
+          alt=""
+        />
+        <div class="card__image-gradient"></div>
+      </div>
+      <div class="card__content">
+        <h2 class="card__title">TRY AGAIN</h2>
+        <dl class="card__info">
+          <dt class="card__info-title">Status</dt>
+          <dd class="card__info-description">Not Found</dd>
+          <dt class="card__info-title">Type</dt>
+          <dd class="card__info-description">Crazy</dd>
+          <dt class="card__info-title">Occurrences</dt>
+          <dd class="card__info-description">000</dd>
+        </dl>
+      </div>
+    </li>
+    `;
+      pagination.textContent = `${(page = 0)} / ${(maxPage = 0)}`;
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-searchBar.addEventListener("submit", async (e) => {
+const prevButton = createButton("previous", async () => {
+  if (page > 1) {
+    page--;
+    await fetchCharacters();
+  }
+});
+
+const nextButton = createButton("next", async () => {
+  if (page < maxPage) {
+    page++;
+    await fetchCharacters();
+  }
+});
+
+const pagination = createPagination(page, maxPage);
+
+const searchBar = createSearchBar(async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
@@ -57,18 +96,8 @@ searchBar.addEventListener("submit", async (e) => {
   await fetchCharacters();
 });
 
-prevButton.addEventListener("click", async () => {
-  if (page > 1) {
-    page--;
-    await fetchCharacters();
-  }
-});
+navigation.append(prevButton, pagination, nextButton);
 
-nextButton.addEventListener("click", async () => {
-  if (page < maxPage) {
-    page++;
-    await fetchCharacters();
-  }
-});
+searchBarContainer.append(searchBar);
 
 fetchCharacters();
